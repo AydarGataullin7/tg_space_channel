@@ -1,5 +1,9 @@
 # .gitignore
 
+# Виртуальные окружения Python
+venv/
+env/
+
 # Папки с изображениями (не загружать в репозиторий)
 epic_images/
 nasa_images/
