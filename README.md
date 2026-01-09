@@ -67,3 +67,36 @@ $ python auto_publisher.py
 ```
 
 При успешной публикации в консоль ничего не выводится, только при ошибках. Проверяйте публикации в самом Telegram-канале @all_ab_sp.
+
+## Как скачать фотографии для публикации
+
+1. Из NASA API и SpaceX API
+
+```bash
+python fetch_nasa_apod.py
+```
+
+```bash
+python fetch_nasa_epic.py
+```
+
+```bash
+python fetch_spacex_images.py
+```
+
+2. Скачать готовые изображения
+   Поместите фотографии в формате .jpg, .png, .jpeg в папку images/ рядом со скриптом.
+   Структура папки:
+
+```text
+tg_space_channel/
+├── auto_publisher.py
+├── .env
+├── requirements.txt
+├── README.md
+└── images/ # ваши фотографии здесь
+├── space1.jpg
+├── space2.png
+└── more/ # или в подпапках
+└── space3.jpeg
+```
