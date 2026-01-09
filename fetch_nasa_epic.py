@@ -32,8 +32,15 @@ def fetch_nasa_epic(count, API_KEY):
 def main():
     load_dotenv()
     API_KEY = os.getenv("API_KEY_NASA")
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--count', type=int, default=10)
+    parser = argparse.ArgumentParser(
+        description='Скачивание снимков Земли от NASA EPIC'
+    )
+    parser.add_argument(
+        '--count',
+        type=int,
+        default=10,
+        help='Количество фото для скачивания (по умолчанию: 10)'
+    )
     args = parser.parse_args()
     fetch_nasa_epic(args.count, API_KEY)
 

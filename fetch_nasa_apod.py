@@ -27,8 +27,15 @@ def fetch_nasa_apod(count, API_KEY):
 def main():
     load_dotenv()
     API_KEY = os.getenv("API_KEY_NASA")
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--count', type=int, default=30)
+    parser = argparse.ArgumentParser(
+        description='Скачивание Astronomy Picture of the Day от NASA'
+    )
+    parser.add_argument(
+        '--count',
+        type=int,
+        default=30,
+        help='Количество фото для скачивания (по умолчанию: 30)'
+    )
     args = parser.parse_args()
     fetch_nasa_apod(args.count, API_KEY)
 

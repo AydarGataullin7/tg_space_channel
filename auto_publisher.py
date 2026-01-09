@@ -10,8 +10,15 @@ def main():
     load_dotenv()
     env_delay = os.getenv('PUBLISH_DELAY_HOURS', '4')
     default_delay = int(env_delay)
-    parser = argparse.ArgumentParser()
-    parser.add_argument('--delay', type=int, default=default_delay)
+    parser = argparse.ArgumentParser(
+        description='Автоматическая публикация фото в Telegram-канал'
+    )
+    parser.add_argument(
+        '--delay',
+        type=int,
+        default=default_delay,
+        help='Задержка между публикациями в часах (по умолчанию: 4)'
+    )
     args = parser.parse_args()
 
     second_in_hour = 3600
