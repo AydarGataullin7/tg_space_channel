@@ -6,11 +6,10 @@ from urllib.parse import urlsplit, unquote
 from helpers import download_image, get_file_extension
 import argparse
 
-load_dotenv()
-API_KEY = os.getenv("API_KEY_NASA")
-
 
 def fetch_nasa_apod(count):
+    load_dotenv()
+    API_KEY = os.getenv("API_KEY_NASA")
     url = f"https://api.nasa.gov/planetary/apod?api_key={API_KEY}&count={count}"
     response = requests.get(url)
     response.raise_for_status()

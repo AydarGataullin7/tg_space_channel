@@ -6,11 +6,8 @@ from urllib.parse import urlsplit, unquote
 from helpers import download_image
 import argparse
 
-load_dotenv()
-API_KEY = os.getenv("API_KEY_NASA")
 
-
-def fetch_nasa_epic(count):
+def fetch_nasa_epic(count, API_KEY):
     url = f"https://api.nasa.gov/EPIC/api/natural/images?api_key={API_KEY}"
     images_dir = Path("epic_images")
     images_dir.mkdir(parents=True, exist_ok=True)
@@ -33,10 +30,12 @@ def fetch_nasa_epic(count):
 
 
 def main():
+    load_dotenv()
+    API_KEY = os.getenv("API_KEY_NASA")
     parser = argparse.ArgumentParser()
     parser.add_argument('--count', type=int, default=10)
     args = parser.parse_args()
-    fetch_nasa_epic(args.count)
+    fetch_nasa_epic(args.count, API_KEY)
 
 
 if __name__ == "__main__":

@@ -5,10 +5,9 @@ import time
 import telegram
 from dotenv import load_dotenv
 
-load_dotenv()
-
 
 def main():
+    load_dotenv()
     env_delay = os.getenv('PUBLISH_DELAY_HOURS', '4')
     default_delay = int(env_delay)
     parser = argparse.ArgumentParser()

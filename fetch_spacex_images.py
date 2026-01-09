@@ -1,13 +1,8 @@
 import requests
-import os
 from pathlib import Path
-from dotenv import load_dotenv
 from urllib.parse import urlsplit, unquote
 from helpers import download_image
 import argparse
-
-load_dotenv()
-API_KEY = os.getenv("API_KEY_NASA")
 
 
 def fetch_spacex_last_launch(launch_ID=None):
