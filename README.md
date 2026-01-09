@@ -95,8 +95,8 @@ tg_space_channel/
 ├── requirements.txt
 ├── README.md
 └── images/ # ваши фотографии здесь
-├── space1.jpg
-├── space2.png
-└── more/ # или в подпапках
-└── space3.jpeg
+    ├── space1.jpg
+    ├── space2.png
+    └── more/ # или в подпапках
+        └── space3.jpeg
 ```
