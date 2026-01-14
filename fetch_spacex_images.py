@@ -34,6 +34,7 @@ def main():
     )
     parser.add_argument(
         '--launch_ID',
+        type=str,  # Явно указываем тип
         help='ID конкретного запуска (если не указать, скачает последний с фото)'
     )
     args = parser.parse_args()

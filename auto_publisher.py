@@ -17,7 +17,8 @@ def main():
         '--delay',
         type=int,
         default=default_delay,
-        help='Задержка между публикациями в часах (по умолчанию: 4)'
+        help='Задержка между публикациями в часах (по умолчанию: 4)',
+        choices=range(1, 25)
     )
     args = parser.parse_args()
 

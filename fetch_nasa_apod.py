@@ -34,7 +34,8 @@ def main():
         '--count',
         type=int,
         default=30,
-        help='Количество фото для скачивания (по умолчанию: 30)'
+        help='Количество фото для скачивания (по умолчанию: 30)',
+        choices=range(1, 51)
     )
     args = parser.parse_args()
     fetch_nasa_apod(args.count, API_KEY)

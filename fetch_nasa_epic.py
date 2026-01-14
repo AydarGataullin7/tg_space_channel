@@ -39,7 +39,8 @@ def main():
         '--count',
         type=int,
         default=10,
-        help='Количество фото для скачивания (по умолчанию: 10)'
+        help='Количество фото для скачивания (по умолчанию: 10)',
+        choices=range(1, 51)
     )
     args = parser.parse_args()
     fetch_nasa_epic(args.count, API_KEY)
