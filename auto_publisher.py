@@ -21,6 +21,7 @@ def main():
     load_dotenv()
     env_delay = os.getenv('PUBLISH_DELAY_HOURS', '4')
     default_delay = int(env_delay)
+    chat_id = os.getenv('TG_CHAT_ID')
     parser = argparse.ArgumentParser(
         description='Автоматическая публикация фото в Telegram-канал'
     )
@@ -54,9 +55,9 @@ def main():
         for image_path in image_files:
             try:
                 with open(image_path, 'rb') as photo:
-                    bot.send_photo(chat_id='@all_ab_sp', photo=photo)
+                    bot.send_photo(chat_id=chat_id, photo=photo)
                     time.sleep(delay_seconds)
-            except Exception as e:
+            except (telegram.error.TelegramError, FileNotFoundError) as e:
                 print(f"Ошибка при публикации {image_path}: {e}")
 
 

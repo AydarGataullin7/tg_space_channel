@@ -25,7 +25,7 @@ def fetch_nasa_epic(count, api_key):
             file_path = images_dir / filename
             download_image(epic_url, file_path)
 
-    except Exception as e:
+    except (requests.exceptions.RequestException, IOError) as e:
         print(f"Ошибка при получении данных от NASA: {e}")
 
 
