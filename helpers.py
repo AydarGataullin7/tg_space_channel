@@ -2,11 +2,11 @@ import requests
 import os
 
 
-def download_image(url, file_path):
+def download_image(url, file_path, params=None):
     headers = {
         "User-Agent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64)"
     }
-    response = requests.get(url, headers=headers)
+    response = requests.get(url, headers=headers, params=params)
     response.raise_for_status()
     with open(file_path, "wb") as f:
         f.write(response.content)

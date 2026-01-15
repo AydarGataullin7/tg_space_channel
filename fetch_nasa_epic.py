@@ -8,11 +8,12 @@ import argparse
 
 
 def fetch_nasa_epic(count, api_key):
-    url = f"https://api.nasa.gov/EPIC/api/natural/images?api_key={api_key}"
+    url = "https://api.nasa.gov/EPIC/api/natural/images"
+    params = {'api_key': api_key}
     images_dir = Path("epic_images")
     images_dir.mkdir(parents=True, exist_ok=True)
     try:
-        response = requests.get(url)
+        response = requests.get(url, params=params)
         response.raise_for_status()
         data = response.json()
         for i, item in enumerate(data[:count], start=1):
@@ -20,11 +21,11 @@ def fetch_nasa_epic(count, api_key):
             date_str = item["date"]
             date_only = date_str.split()[0]
             year, month, day = date_only.split("-")
-            epic_url = f"https://api.nasa.gov/EPIC/archive/natural/{year}/{month}/{day}/png/{image_name}.png?api_key={api_key}"
+            epic_url = f"https://api.nasa.gov/EPIC/archive/natural/{year}/{month}/{day}/png/{image_name}.png"
+            epic_params = {'api_key': api_key}
             filename = (f"epic_{i}.png")
             file_path = images_dir / filename
-            download_image(epic_url, file_path)
-
+            download_image(epic_url, epic_params, file_path)
     except (requests.exceptions.RequestException, IOError) as e:
         print(f"Ошибка при получении данных от NASA: {e}")
 

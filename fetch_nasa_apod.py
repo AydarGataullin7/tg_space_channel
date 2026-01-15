@@ -8,9 +8,12 @@ import argparse
 
 
 def fetch_nasa_apod(count, api_key):
-
-    url = f"https://api.nasa.gov/planetary/apod?api_key={api_key}&count={count}"
-    response = requests.get(url)
+    url = "https://api.nasa.gov/planetary/apod"
+    params = {
+        'api_key': api_key,
+        'count': count
+    }
+    response = requests.get(url, params=params)
     response.raise_for_status()
     data = response.json()
     images_dir = Path("nasa_images")
