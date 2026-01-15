@@ -55,8 +55,10 @@ def main():
         for image_path in image_files:
             try:
                 with open(image_path, 'rb') as photo:
-                    bot.send_photo(chat_id=chat_id, photo=photo)
-                    time.sleep(delay_seconds)
+                    photo_data = photo.read()
+                bot.send_photo(chat_id=chat_id, photo=photo_data)
+                time.sleep(delay_seconds)
+
             except (telegram.error.TelegramError, FileNotFoundError) as e:
                 print(f"Ошибка при публикации {image_path}: {e}")
 
