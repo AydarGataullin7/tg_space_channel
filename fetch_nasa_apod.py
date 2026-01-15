@@ -24,7 +24,7 @@ def fetch_nasa_apod(count, api_key):
 
         image_url = item['url']
         extension = get_file_extension(image_url)
-        filename = (f"nasa_{index}{extension}")
+        filename = f"nasa_{index}{extension}"
         file_path = images_dir / filename
         download_image(image_url, file_path)
 
