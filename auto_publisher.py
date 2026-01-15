@@ -6,6 +6,17 @@ import telegram
 from dotenv import load_dotenv
 
 
+def get_image_files(image_folder):
+    image_files = []
+    for folder in os.listdir(image_folder):
+        folder_path = os.path.join(image_folder, folder)
+        if os.path.isdir(folder_path):
+            for filename in os.listdir(folder_path):
+                if filename.lower().endswith(('.jpg', '.png', '.jpeg')):
+                    image_files.append(os.path.join(folder_path, filename))
+    return image_files
+
+
 def main():
     load_dotenv()
     env_delay = os.getenv('PUBLISH_DELAY_HOURS', '4')
@@ -31,13 +42,7 @@ def main():
     image_folder = "."
 
     while True:
-        image_files = []
-        for folder in os.listdir(image_folder):
-            folder_path = os.path.join(image_folder, folder)
-            if os.path.isdir(folder_path):
-                for filename in os.listdir(folder_path):
-                    if filename.lower().endswith(('.jpg', '.png', '.jpeg')):
-                        image_files.append(os.path.join(folder_path, filename))
+        image_files = get_image_files(image_folder)
 
         if not image_files:
             print("Нет фотографий для публикации.")
