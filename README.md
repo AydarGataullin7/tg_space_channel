@@ -20,9 +20,9 @@ TG_CHAT_ID=ваш_телеграм_канал
 ```
 
 Описание переменных окружения:
-TG_TOKEN - токен вашего Telegram бота (получить у @BotFather)
-PUBLISH_DELAY_HOURS - задержка между публикациями в часах (по умолчанию 4)
-API_KEY_NASA - API ключ для доступа к NASA API (получить на api.nasa.gov)
+TG_TOKEN - токен вашего Telegram бота (получить у @BotFather)  
+PUBLISH_DELAY_HOURS - задержка между публикациями в часах (по умолчанию 4)  
+API_KEY_NASA - API ключ для доступа к NASA API (получить на api.nasa.gov)  
 TG_CHAT_ID - ID вашего Telegram канала (например, @all_ab_sp)
 
 ## Как использовать
