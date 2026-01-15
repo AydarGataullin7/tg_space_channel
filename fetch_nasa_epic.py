@@ -1,5 +1,6 @@
 import requests
 import os
+import datetime
 from pathlib import Path
 from dotenv import load_dotenv
 from urllib.parse import urlsplit, unquote
@@ -12,22 +13,25 @@ def fetch_nasa_epic(count, api_key):
     params = {'api_key': api_key}
     images_dir = Path("epic_images")
     images_dir.mkdir(parents=True, exist_ok=True)
+
     try:
         response = requests.get(url, params=params)
         response.raise_for_status()
         epic_images_data = response.json()
-        for i, item in enumerate(epic_images_data[:count], start=1):
-            image_name = item["image"]
-            date_str = item["date"]
-            date_only = date_str.split()[0]
-            year, month, day = date_only.split("-")
-            epic_url = f"https://api.nasa.gov/EPIC/archive/natural/{year}/{month}/{day}/png/{image_name}.png"
-            epic_params = {'api_key': api_key}
-            filename = (f"epic_{i}.png")
-            file_path = images_dir / filename
-            download_image(epic_url, epic_params, file_path)
     except (requests.exceptions.RequestException, IOError) as e:
         print(f"Ошибка при получении данных от NASA: {e}")
+        return
+
+    for image_index, image_data in enumerate(epic_images_data[:count], start=1):
+        image_name = image_data["image"]
+        date_str = image_data["date"]
+        date_obj = datetime.datetime.fromisoformat(
+            date_str.replace("Z", "+00:00"))
+        epic_url = f"https://api.nasa.gov/EPIC/archive/natural/{date_obj:%Y/%m/%d}/png/{image_name}.png"
+        epic_params = {'api_key': api_key}
+        filename = (f"epic_{image_index}.png")
+        file_path = images_dir / filename
+        download_image(epic_url, epic_params, file_path)
 
 
 def main():
