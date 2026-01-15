@@ -7,8 +7,8 @@ from helpers import download_image
 import argparse
 
 
-def fetch_nasa_epic(count, API_KEY):
-    url = f"https://api.nasa.gov/EPIC/api/natural/images?api_key={API_KEY}"
+def fetch_nasa_epic(count, api_key):
+    url = f"https://api.nasa.gov/EPIC/api/natural/images?api_key={api_key}"
     images_dir = Path("epic_images")
     images_dir.mkdir(parents=True, exist_ok=True)
     try:
@@ -20,7 +20,7 @@ def fetch_nasa_epic(count, API_KEY):
             date_str = item["date"]
             date_only = date_str.split()[0]
             year, month, day = date_only.split("-")
-            epic_url = f"https://api.nasa.gov/EPIC/archive/natural/{year}/{month}/{day}/png/{image_name}.png?api_key={API_KEY}"
+            epic_url = f"https://api.nasa.gov/EPIC/archive/natural/{year}/{month}/{day}/png/{image_name}.png?api_key={api_key}"
             filename = (f"epic_{i}.png")
             file_path = images_dir / filename
             download_image(epic_url, file_path)
@@ -31,7 +31,7 @@ def fetch_nasa_epic(count, API_KEY):
 
 def main():
     load_dotenv()
-    API_KEY = os.getenv("API_KEY_NASA")
+    api_key = os.getenv("API_KEY_NASA")
     parser = argparse.ArgumentParser(
         description='Скачивание снимков Земли от NASA EPIC'
     )
@@ -43,7 +43,7 @@ def main():
         choices=range(1, 51)
     )
     args = parser.parse_args()
-    fetch_nasa_epic(args.count, API_KEY)
+    fetch_nasa_epic(args.count, api_key)
 
 
 if __name__ == "__main__":

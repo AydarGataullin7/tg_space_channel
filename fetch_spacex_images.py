@@ -5,16 +5,16 @@ from helpers import download_image
 import argparse
 
 
-def fetch_spacex_last_launch(launch_ID=None):
+def fetch_spacex_last_launch(launch_id=None):
     url = 'https://api.spacexdata.com/v5/launches'
     response = requests.get(url)
     launches = response.json()
-    if launch_ID is None:
+    if launch_id is None:
         for launch in reversed(launches):
             if launch['links']['flickr']['original']:
-                launch_ID = launch['id']
+                launch_id = launch['id']
                 break
-    url_launch = f'https://api.spacexdata.com/v5/launches/{launch_ID}'
+    url_launch = f'https://api.spacexdata.com/v5/launches/{launch_id}'
     response = requests.get(url_launch)
     response.raise_for_status()
     data = response.json()
@@ -33,12 +33,12 @@ def main():
         description='Скачивание фото запусков SpaceX'
     )
     parser.add_argument(
-        '--launch_ID',
+        '--launch_id',
         type=str,  # Явно указываем тип
         help='ID конкретного запуска (если не указать, скачает последний с фото)'
     )
     args = parser.parse_args()
-    fetch_spacex_last_launch(args.launch_ID)
+    fetch_spacex_last_launch(args.launch_id)
 
 
 if __name__ == "__main__":

@@ -7,9 +7,9 @@ from helpers import download_image, get_file_extension
 import argparse
 
 
-def fetch_nasa_apod(count, API_KEY):
+def fetch_nasa_apod(count, api_key):
 
-    url = f"https://api.nasa.gov/planetary/apod?api_key={API_KEY}&count={count}"
+    url = f"https://api.nasa.gov/planetary/apod?api_key={api_key}&count={count}"
     response = requests.get(url)
     response.raise_for_status()
     data = response.json()
@@ -26,7 +26,7 @@ def fetch_nasa_apod(count, API_KEY):
 
 def main():
     load_dotenv()
-    API_KEY = os.getenv("API_KEY_NASA")
+    api_key = os.getenv("API_KEY_NASA")
     parser = argparse.ArgumentParser(
         description='Скачивание Astronomy Picture of the Day от NASA'
     )
@@ -38,7 +38,7 @@ def main():
         choices=range(1, 51)
     )
     args = parser.parse_args()
-    fetch_nasa_apod(args.count, API_KEY)
+    fetch_nasa_apod(args.count, api_key)
 
 
 if __name__ == "__main__":
