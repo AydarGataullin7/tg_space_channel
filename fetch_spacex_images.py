@@ -17,8 +17,8 @@ def fetch_spacex_last_launch(launch_id=None):
     url_launch = f'https://api.spacexdata.com/v5/launches/{launch_id}'
     response = requests.get(url_launch)
     response.raise_for_status()
-    data = response.json()
-    images_url = data['links']['flickr']['original']
+    launch_data = response.json()
+    images_url = launch_data['links']['flickr']['original']
     images_dir = Path("spacex_images")
     images_dir.mkdir(parents=True, exist_ok=True)
 

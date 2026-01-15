@@ -15,8 +15,8 @@ def fetch_nasa_epic(count, api_key):
     try:
         response = requests.get(url, params=params)
         response.raise_for_status()
-        data = response.json()
-        for i, item in enumerate(data[:count], start=1):
+        epic_images_data = response.json()
+        for i, item in enumerate(epic_images_data[:count], start=1):
             image_name = item["image"]
             date_str = item["date"]
             date_only = date_str.split()[0]

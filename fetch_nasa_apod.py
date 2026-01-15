@@ -15,16 +15,18 @@ def fetch_nasa_apod(count, api_key):
     }
     response = requests.get(url, params=params)
     response.raise_for_status()
-    data = response.json()
+    apod_data = response.json()
     images_dir = Path("nasa_images")
     images_dir.mkdir(parents=True, exist_ok=True)
-    for index, item in enumerate(data, start=1):
-        if item['media_type'] == 'image':
-            image_url = item['url']
-            extension = get_file_extension(image_url)
-            filename = (f"nasa_{index}{extension}")
-            file_path = images_dir / filename
-            download_image(image_url, file_path)
+    for index, item in enumerate(apod_data, start=1):
+        if item['media_type'] != 'image':
+            continue
+
+        image_url = item['url']
+        extension = get_file_extension(image_url)
+        filename = (f"nasa_{index}{extension}")
+        file_path = images_dir / filename
+        download_image(image_url, file_path)
 
 
 def main():
