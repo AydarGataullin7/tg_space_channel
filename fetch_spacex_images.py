@@ -9,7 +9,8 @@ def fetch_spacex_last_launch(launch_id=None):
     url = 'https://api.spacexdata.com/v5/launches'
     response = requests.get(url)
     launches = response.json()
-    if launch_id is None:
+
+    if not launch_id:
         for launch in reversed(launches):
             if launch['links']['flickr']['original']:
                 launch_id = launch['id']
