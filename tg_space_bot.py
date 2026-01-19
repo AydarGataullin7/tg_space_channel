@@ -9,10 +9,12 @@ def main():
 
     bot = telegram.Bot(token=tg_token)
     updates = bot.get_updates()
-    bot.send_photo(
-        chat_id='@all_ab_sp',
-        photo=open('nasa_images/nasa_5.jpg', 'rb')
-    )
+
+    with open('nasa_images/nasa_5.jpg', 'rb') as photo_file:
+        bot.send_photo(
+            chat_id='@all_ab_sp',
+            photo=photo_file
+        )
 
 
 if __name__ == "__main__":
