@@ -37,9 +37,9 @@ def main():
     second_in_hour = 3600
     delay_seconds = args.delay * second_in_hour
 
-    TG_TOKEN = os.getenv('TG_TOKEN')
+    tg_token = os.getenv('TG_TOKEN')
 
-    bot = telegram.Bot(token=TG_TOKEN)
+    bot = telegram.Bot(token=tg_token)
     image_folder = "."
 
     while True:
