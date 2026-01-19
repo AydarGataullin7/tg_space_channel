@@ -2,10 +2,18 @@ import telegram
 import os
 from dotenv import load_dotenv
 
-load_dotenv()
-TG_TOKEN = os.getenv("TG_TOKEN")
 
-bot = telegram.Bot(token=TG_TOKEN)
-updates = bot.get_updates()
-bot.send_photo(
-    chat_id='@all_ab_sp', photo=open('nasa_images/nasa_5.jpg', 'rb'))
+def main():
+    load_dotenv()
+    tg_token = os.getenv("TG_TOKEN")
+
+    bot = telegram.Bot(token=tg_token)
+    updates = bot.get_updates()
+    bot.send_photo(
+        chat_id='@all_ab_sp',
+        photo=open('nasa_images/nasa_5.jpg', 'rb')
+    )
+
+
+if __name__ == "__main__":
+    main()
