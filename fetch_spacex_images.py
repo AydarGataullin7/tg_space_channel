@@ -22,7 +22,7 @@ def fetch_spacex_last_launch(launch_id=None):
         if not launch_id:
             print("Нет запусков с фотографиями")
             return
-    url_launch = f'https://api.nasa.gov/v5/launches/{launch_id}'
+    url_launch = f'https://api.spacexdata.com/v5/launches/{launch_id}'
     response = requests.get(url_launch)
     response.raise_for_status()
     launch_data = response.json()
