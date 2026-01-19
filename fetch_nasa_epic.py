@@ -14,13 +14,9 @@ def fetch_nasa_epic(count, api_key):
     images_dir = Path("epic_images")
     images_dir.mkdir(parents=True, exist_ok=True)
 
-    try:
-        response = requests.get(url, params=params)
-        response.raise_for_status()
-        epic_images_data = response.json()
-    except (requests.exceptions.RequestException, IOError) as e:
-        print(f"Ошибка при получении данных от NASA: {e}")
-        return
+    response = requests.get(url, params=params)
+    response.raise_for_status()
+    epic_images_data = response.json()
 
     for image_index, image_data in enumerate(epic_images_data[:count], start=1):
         image_name = image_data["image"]
@@ -29,7 +25,7 @@ def fetch_nasa_epic(count, api_key):
             date_str.replace("Z", "+00:00"))
         epic_url = f"https://api.nasa.gov/EPIC/archive/natural/{date_obj:%Y/%m/%d}/png/{image_name}.png"
         epic_params = {'api_key': api_key}
-        filename = (f"epic_{image_index}.png")
+        filename = f"epic_{image_index}.png"
         file_path = images_dir / filename
         download_image(epic_url, epic_params, file_path)
 
@@ -48,7 +44,11 @@ def main():
         choices=range(1, 51)
     )
     args = parser.parse_args()
-    fetch_nasa_epic(args.count, api_key)
+
+    try:
+        fetch_nasa_epic(args.count, api_key)
+    except (requests.exceptions.RequestException, IOError) as e:
+        print(f"Ошибка при получении данных от NASA: {e}")
 
 
 if __name__ == "__main__":
