@@ -5,17 +5,24 @@ from helpers import download_image
 import argparse
 
 
+def get_last_launch_with_images(launches):
+    for launch in reversed(launches):
+        if launch['links']['flickr']['original']:
+            return launch['id']
+    return None
+
+
 def fetch_spacex_last_launch(launch_id=None):
     url = 'https://api.spacexdata.com/v5/launches'
     response = requests.get(url)
     launches = response.json()
 
     if not launch_id:
-        for launch in reversed(launches):
-            if launch['links']['flickr']['original']:
-                launch_id = launch['id']
-                break
-    url_launch = f'https://api.spacexdata.com/v5/launches/{launch_id}'
+        launch_id = get_last_launch_with_images(launches)
+        if not launch_id:
+            print("Нет запусков с фотографиями")
+            return
+    url_launch = f'https://api.nasa.gov/v5/launches/{launch_id}'
     response = requests.get(url_launch)
     response.raise_for_status()
     launch_data = response.json()
