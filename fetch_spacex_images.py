@@ -5,6 +5,13 @@ from helpers import download_image
 import argparse
 
 
+def get_all_launches():
+    url = 'https://api.spacexdata.com/v5/launches'
+    response = requests.get(url)
+    response.raise_for_status()
+    return response.json()
+
+
 def get_last_launch_with_images(launches):
     for launch in reversed(launches):
         if launch['links']['flickr']['original']:
@@ -12,16 +19,7 @@ def get_last_launch_with_images(launches):
     return None
 
 
-def fetch_spacex_last_launch(launch_id=None):
-    url = 'https://api.spacexdata.com/v5/launches'
-    response = requests.get(url)
-    launches = response.json()
-
-    if not launch_id:
-        launch_id = get_last_launch_with_images(launches)
-        if not launch_id:
-            print("Нет запусков с фотографиями")
-            return
+def fetch_launch_images(launch_id):
     url_launch = f'https://api.spacexdata.com/v5/launches/{launch_id}'
     response = requests.get(url_launch)
     response.raise_for_status()
@@ -31,7 +29,7 @@ def fetch_spacex_last_launch(launch_id=None):
     images_dir.mkdir(parents=True, exist_ok=True)
 
     for index, images in enumerate(images_url, start=1):
-        filename = (f"spacex_{index}.jpg")
+        filename = f"spacex_{index}.jpg"
         file_path = images_dir / filename
         download_image(images, file_path)
 
@@ -46,7 +44,15 @@ def main():
         help='ID конкретного запуска (если не указать, скачает последний с фото)'
     )
     args = parser.parse_args()
-    fetch_spacex_last_launch(args.launch_id)
+    if not args.launch_id:
+        launches = get_all_launches()
+        launch_id = get_last_launch_with_images(launches)
+        if not launch_id:
+            print("Нет запусков с фотографиями")
+            return
+    else:
+        launch_id = args.launch_id
+    fetch_launch_images(launch_id)
 
 
 if __name__ == "__main__":
